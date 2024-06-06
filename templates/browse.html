@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Browse Images</h1>
+<form method="GET">
+  <input type="text" name="query" placeholder="Search...">
+  <input type="submit" value="Search">
+</form>
+<ul>
+  {% for image in images %}
+  <li>
+    <a href="{{ url_for('view_image', filename=image.filename) }}" target="_blank">{{ image.filename }}</a>
+    ({{ image.date }}) - Part Number: {{ image.part_number }}, Version: {{ image.version }},
+    Owner: {{ image.owner }}, Category: {{ image.category }}, Marking: {{ image.marking }}, UID: {{ image.uid }}
+  </li>
+  {% endfor %}
+</ul>
+{% endblock %}

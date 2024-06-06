@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>View Image</h1>
+<img src="{{ url_for('uploaded_file', filename=filename) }}" alt="{{ filename }}" style="max-width: 100%;">
+<br>
+<a href="{{ url_for('download_file', filename=filename) }}" class="btn btn-primary">Download</a>
+{% endblock %}

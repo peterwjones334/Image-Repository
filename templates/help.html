@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Help Page</h1>
+<p>Welcome to the Image Upload Application. Here is how you can use the application:</p>
+
+<h2>Uploading Images</h2>
+<ol>
+    <li>Navigate to the <a href="{{ url_for('upload') }}">Upload</a> page.</li>
+    <li>Fill in the form with the required metadata:
+        <ul>
+            <li><strong>Image</strong>: Choose the image file you want to upload. Allowed formats are png, jpg, jpeg, gif.</li>
+            <li><strong>Part Number</strong>: Enter the part number associated with the image.</li>
+            <li><strong>Version</strong>: Enter the version of the image.</li>
+            <li><strong>Owner</strong>: Select the owner from the dropdown list.</li>
+            <li><strong>Category</strong>: Select the category from the dropdown list.</li>
+            <li><strong>Marking</strong>: Select the marking from the dropdown list.</li>
+        </ul>
+    </li>
+    <li>Click the "Upload" button to upload the image and save the metadata. Each uploaded image will be assigned a unique identifier (UID).</li>
+</ol>
+
+<h2>Browsing Images</h2>
+<ol>
+    <li>Navigate to the <a href="{{ url_for('browse') }}">Browse</a> page.</li>
+    <li>Enter a query in the search bar to filter images based on part number, version, owner, category, marking, or leave it empty to see all images.</li>
+    <li>Click on the filename link to view the image in a new window. In the new window, you can see the image and download it using the "Download" button.</li>
+</ol>
+
+<h2>Viewing Image Index</h2>
+<ol>
+    <li>Navigate to the <a href="{{ url_for('index') }}">Home</a> page.</li>
+    <li>See a list of all uploaded images along with their metadata including the UID.</li>
+</ol>
+
+<h2>Image Metadata</h2>
+<p>Each image uploaded to the application will have the following metadata fields:</p>
+<ul>
+    <li><strong>UID</strong>: A unique identifier for the image.</li>
+    <li><strong>Filename</strong>: The name of the uploaded file.</li>
+    <li><strong>Date</strong>: The upload date of the image.</li>
+    <li><strong>Part Number</strong>: The part number associated with the image.</li>
+    <li><strong>Version</strong>: The version of the image.</li>
+    <li><strong>Owner</strong>: The owner of the image, selected from a dropdown list.</li>
+    <li><strong>Category</strong>: The category of the image, selected from a dropdown list.</li>
+    <li><strong>Marking</strong>: The marking of the image, selected from a dropdown list.</li>
+</ul>
+
+<p>If you have any questions or need further assistance, please contact support.</p>
+{% endblock %}

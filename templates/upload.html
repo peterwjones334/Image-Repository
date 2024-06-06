@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Upload Image</h1>
+<form method="POST" enctype="multipart/form-data">
+  {{ form.hidden_tag() }}
+  <p>
+    {{ form.image.label }}<br>
+    {{ form.image }}
+  </p>
+  <p>
+    {{ form.part_number.label }}<br>
+    {{ form.part_number }}
+  </p>
+  <p>
+    {{ form.version.label }}<br>
+    {{ form.version }}
+  </p>
+  <p>
+    {{ form.owner.label }}<br>
+    {{ form.owner }}
+  </p>
+  <p>
+    {{ form.category.label }}<br>
+    {{ form.category }}
+  </p>
+  <p>
+    {{ form.marking.label }}<br>
+    {{ form.marking }}
+  </p>
+  <p>{{ form.submit }}</p>
+</form>
+{% endblock %}
+
