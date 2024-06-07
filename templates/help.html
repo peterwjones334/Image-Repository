@@ -1,79 +1,87 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>Help Page</h1>
-    <p>Welcome to the Image Upload and Viewer Application. This guide will help you navigate through the features of the application.</p>
+<div class="container">
+        <header>
+            <h1>Help Page</h1>
+            <p>Welcome to the Image Upload and Viewer Application. This guide will help you navigate through the features of the application.</p>
+        </header>
 
-    <h2>Uploading Images</h2>
-    <p>To upload an image:</p>
-    <ol>
-        <li>Navigate to the <a href="{{ url_for('upload') }}">Upload</a> page.</li>
-        <li>Fill in the form with the required metadata:
-            <ul>
-                <li><strong>Image</strong>: Choose the image file you want to upload. Allowed formats are PNG, JPG, JPEG, GIF, TIFF.</li>
-                <li><strong>Part Number</strong>: Enter the part number associated with the image.</li>
-                <li><strong>Version</strong>: Enter the version of the image.</li>
-                <li><strong>Owner</strong>: Select the owner from the dropdown list.</li>
-                <li><strong>Category</strong>: Select the category from the dropdown list.</li>
-                <li><strong>Marking</strong>: Select the marking from the dropdown list.</li>
-            </ul>
-        </li>
-        <li>Click the "Upload" button to save the image and its metadata. Each uploaded image will be assigned a unique identifier (UID).</li>
-    </ol>
+        <h2>Uploading Images</h2>
+        <p>To upload an image:</p>
+        <ol>
+            <li>Navigate to the <a href="{{ url_for('upload') }}">Upload</a> page.</li>
+            <li>Fill in the form with the required metadata:
+                <ul>
+                    <li><strong>Image</strong>: Choose the image file you want to upload. Allowed formats are PNG, JPG, JPEG, GIF, TIFF.</li>
+                    <li><strong>Part Number</strong>: Enter the part number associated with the image.</li>
+                    <li><strong>Version</strong>: Enter the version of the image.</li>
+                    <li><strong>Owner</strong>: Select the owner from the dropdown list.</li>
+                    <li><strong>Category</strong>: Select the category from the dropdown list.</li>
+                    <li><strong>Marking</strong>: Select the marking from the dropdown list.</li>
+                </ul>
+            </li>
+            <li>Click the "Upload" button to save the image and its metadata. Each uploaded image will be assigned a unique identifier (UID).</li>
+        </ol>
 
-    <h2>Browsing Images</h2>
-    <p>To browse and search for images:</p>
-    <ol>
-        <li>Navigate to the <a href="{{ url_for('browse') }}">Browse</a> page.</li>
-        <li>Enter a query in the search bar to filter images based on part number, version, owner, category, or marking, or leave it empty to see all images.</li>
-        <li>Click on a filename link to view the image in a new window.</li>
-    </ol>
+        <h2>Browsing Images</h2>
+        <p>To browse and search for images:</p>
+        <ol>
+            <li>Navigate to the <a href="{{ url_for('browse') }}">Browse</a> page.</li>
+            <li>Enter a query in the search bar to filter images based on part number, version, owner, category, or marking, or leave it empty to see all images.</li>
+            <li>Click on a filename link to view the image in a new window.</li>
+        </ol>
 
-    <h2>Viewing and Downloading Images</h2>
-    <p>To view and download images:</p>
-    <ol>
-        <li>When you click on an image filename from the browse page, it opens in a new window.</li>
-        <li>In the new window, you can:
-            <ul>
-                <li>Use the "Fit to Window" button to fit the image to the window.</li>
-                <li>Use the "Center Image" button to center the image within the window.</li>
-                <li>Download the image in various formats:
-                    <ul>
-                        <li><strong>Native Format</strong>: Download the image in its original format.</li>
-                        <li><strong>PNG</strong>: Download the image as a PNG file.</li>
-                        <li><strong>PDF</strong>: Download the image as a PDF file, fit to an A4 page.</li>
-                        <li><strong>JPEG</strong>: Download the image as a JPEG file.</li>
-                    </ul>
-                </li>
-            </ul>
-        </li>
-    </ol>
+        <h2>Viewing and Downloading Images</h2>
+        <p>To view and download images:</p>
+        <ol>
+            <li>When you click on an image filename from the browse page, it opens in a new window.</li>
+            <li>In the new window, you can:
+                <ul>
+                    <li>Use the "Fit to Window" button to fit the image to the window.</li>
+                    <li>Use the "Center Image" button to center the image within the window.</li>
+                    <li>Download the image in various formats:
+                        <ul>
+                            <li><strong>Native Format</strong>: Download the image in its original format.</li>
+                            <li><strong>PNG</strong>: Download the image as a PNG file.</li>
+                            <li><strong>PDF</strong>: Download the image as a PDF file, fit to an A4 page.</li>
+                            <li><strong>JPEG</strong>: Download the image as a JPEG file.</li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+        </ol>
 
-    <h2>Image Metadata</h2>
-    <p>Each image uploaded to the application will have the following metadata fields:</p>
-    <ul>
-        <li><strong>UID</strong>: A unique identifier for the image.</li>
-        <li><strong>Filename</strong>: The name of the uploaded file.</li>
-        <li><strong>Date</strong>: The upload date of the image.</li>
-        <li><strong>Part Number</strong>: The part number associated with the image.</li>
-        <li><strong>Version</strong>: The version of the image.</li>
-        <li><strong>Owner</strong>: The owner of the image, selected from a dropdown list.</li>
-        <li><strong>Category</strong>: The category of the image, selected from a dropdown list.</li>
-        <li><strong>Marking</strong>: The marking of the image, selected from a dropdown list.</li>
-    </ul>
+        <h2>Image Metadata</h2>
+        <p>Each image uploaded to the application will have the following metadata fields:</p>
+        <ul>
+            <li><strong>UID</strong>: A unique identifier for the image.</li>
+            <li><strong>Filename</strong>: The name of the uploaded file.</li>
+            <li><strong>Date</strong>: The upload date of the image.</li>
+            <li><strong>Part Number</strong>: The part number associated with the image.</li>
+            <li><strong>Version</strong>: The version of the image.</li>
+            <li><strong>Owner</strong>: The owner of the image, selected from a dropdown list.</li>
+            <li><strong>Category</strong>: The category of the image, selected from a dropdown list.</li>
+            <li><strong>Marking</strong>: The marking of the image, selected from a dropdown list.</li>
+        </ul>
 
-    <h2>Keyboard and Mouse Controls for Viewing Images</h2>
-    <p>While viewing an image, you can use the following controls:</p>
-    <ul>
-        <li><strong>Zoom</strong>: Use the mouse wheel to zoom in and out.</li>
-        <li><strong>Pan</strong>: Click and drag the mouse to pan around the image.</li>
-        <li><strong>Keyboard Navigation</strong>:
-            <ul>
-                <li><strong>Arrow Keys / WASD</strong>: Pan the image up, down, left, and right.</li>
-                <li><strong>Page Up / Page Down</strong>: Zoom in and out.</li>
-            </ul>
-        </li>
-    </ul>
+        <h2>Keyboard and Mouse Controls for Viewing Images</h2>
+        <p>While viewing an image, you can use the following controls:</p>
+        <ul>
+            <li><strong>Zoom</strong>: Use the mouse wheel to zoom in and out.</li>
+            <li><strong>Pan</strong>: Click and drag the mouse to pan around the image.</li>
+            <li><strong>Keyboard Navigation</strong>:
+                <ul>
+                    <li><strong>Arrow Keys / WASD</strong>: Pan the image up, down, left, and right.</li>
+                    <li><strong>Page Up / Page Down</strong>: Zoom in and out.</li>
+                </ul>
+            </li>
+        </ul>
 
-    <h2>Contact Support</h2>
-    <p>If you have any questions or need further assistance, please contact support.</p>
+        <h2>Contact Support</h2>
+        <p>If you have any questions or need further assistance, please contact support.</p>
+
+        <footer>
+            <p>&copy; 2024 Image Upload and Viewer Application.</p>
+        </footer>
+    </div>
 {% endblock %}
