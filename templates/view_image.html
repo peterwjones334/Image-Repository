@@ -1,7 +1,182 @@
-{% extends "base.html" %}
-{% block content %}
-<h1>View Image</h1>
-<img src="{{ url_for('uploaded_file', filename=filename) }}" alt="{{ filename }}" style="max-width: 100%;">
-<br>
-<a href="{{ url_for('download_file', filename=filename) }}" class="btn btn-primary">Download</a>
-{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Image Viewer</title>
+    <style>
+        #image-container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+        }
+        #image {
+            position: absolute;
+            transform-origin: top left;
+            display: none;
+        }
+        #spinner {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        #controls {
+            position: fixed;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+    </style>
+</head>
+<body>
+    <div id="image-container">
+        <img id="image" src="{{ url_for('uploaded_file', filename=filename) }}" alt="Image" onload="initializeImage()">
+        <div id="spinner">Loading...</div>
+    </div>
+    <div id="controls">
+        <button onclick="fitToWindow()">Fit to Window</button>
+        <button onclick="centerImage()">Center Image</button>
+        <button onclick="downloadImage('native')">Download as Native Format</button>
+        <button onclick="downloadImage('png')">Download as PNG</button>
+        <button onclick="downloadImage('pdf')">Download as PDF</button>
+        <button onclick="downloadImage('jpeg')">Download as Jpeg</button>
+    </div>
+    <script>
+        let zoom = 1;
+        let xOffset = 0;
+        let yOffset = 0;
+
+        const imageContainer = document.getElementById('image-container');
+        const image = document.getElementById('image');
+        const spinner = document.getElementById('spinner');
+
+        function initializeImage() {
+            fitToWindow();
+            spinner.style.display = 'none';
+            image.style.display = 'block';
+        }
+
+        function fitToWindow() {
+            const containerAspect = imageContainer.clientWidth / imageContainer.clientHeight;
+            const imageAspect = image.naturalWidth / image.naturalHeight;
+
+            if (containerAspect > imageAspect) {
+                zoom = imageContainer.clientHeight / image.naturalHeight;
+            } else {
+                zoom = imageContainer.clientWidth / image.naturalWidth;
+            }
+
+            xOffset = (imageContainer.clientWidth - image.naturalWidth * zoom) / 2;
+            yOffset = (imageContainer.clientHeight - image.naturalHeight * zoom) / 2;
+
+            updateImage();
+        }
+
+        function centerImage() {
+            xOffset = (imageContainer.clientWidth - image.naturalWidth * zoom) / 2;
+            yOffset = (imageContainer.clientHeight - image.naturalHeight * zoom) / 2;
+            updateImage();
+        }
+
+        function updateImage() {
+            image.style.transform = `translate(${xOffset}px, ${yOffset}px) scale(${zoom})`;
+        }
+
+        function downloadImage(format) {
+            let filename = '{{ filename }}';
+            let baseFilename = filename.split('.').slice(0, -1).join('.');
+            let downloadFormat = format === 'native' ? filename.split('.').pop() : format;
+            
+            fetch('/download_image', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ filename: filename, format: downloadFormat })
+            })
+            .then(response => response.blob())
+            .then(blob => {
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `${baseFilename}.${downloadFormat}`;
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+            });
+        }
+
+        imageContainer.addEventListener('wheel', event => {
+            event.preventDefault();
+            const zoomIntensity = 0.1;
+            const mouseX = event.clientX - imageContainer.offsetLeft;
+            const mouseY = event.clientY - imageContainer.offsetTop;
+
+            const wx = (mouseX - xOffset) / (image.naturalWidth * zoom);
+            const wy = (mouseY - yOffset) / (image.naturalHeight * zoom);
+
+            zoom += event.deltaY * -zoomIntensity;
+            zoom = Math.min(Math.max(0.1, zoom), 5);
+
+            xOffset = mouseX - wx * image.naturalWidth * zoom;
+            yOffset = mouseY - wy * image.naturalHeight * zoom;
+
+            updateImage();
+        });
+
+        let isPanning = false;
+        let startX, startY;
+
+        imageContainer.addEventListener('mousedown', event => {
+            isPanning = true;
+            startX = event.clientX - xOffset;
+            startY = event.clientY - yOffset;
+        });
+
+        imageContainer.addEventListener('mouseup', () => {
+            isPanning = false;
+        });
+
+        imageContainer.addEventListener('mousemove', event => {
+            if (!isPanning) return;
+            xOffset = event.clientX - startX;
+            yOffset = event.clientY - startY;
+            updateImage();
+        });
+
+        document.addEventListener('keydown', event => {
+            const panIntensity = 20;
+            switch (event.key) {
+                case 'ArrowUp':
+                case 'w':
+                    yOffset -= panIntensity;
+                    break;
+                case 'ArrowDown':
+                case 's':
+                    yOffset += panIntensity;
+                    break;
+                case 'ArrowLeft':
+                case 'a':
+                    xOffset -= panIntensity;
+                    break;
+                case 'ArrowRight':
+                case 'd':
+                    xOffset += panIntensity;
+                    break;
+                case 'PageUp':
+                    zoom += 0.1;
+                    zoom = Math.min(zoom, 5);
+                    break;
+                case 'PageDown':
+                    zoom -= 0.1;
+                    zoom = Math.max(zoom, 0.1);
+                    break;
+                default:
+                    return;
+            }
+            updateImage();
+        });
+
+        spinner.style.display = 'block';
+    </script>
+</body>
+</html>
