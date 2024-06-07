@@ -3,9 +3,9 @@ from wtforms import StringField, SubmitField, FileField, SelectField
 from wtforms.validators import DataRequired, ValidationError
 
 def validate_image(form, field):
-    allowed_extensions = {'png', 'jpg', 'jpeg', 'gif'}
+    allowed_extensions = {'png', 'jpg', 'jpeg', 'gif', 'tiff'}
     if '.' not in field.data.filename or field.data.filename.rsplit('.', 1)[1].lower() not in allowed_extensions:
-        raise ValidationError('Invalid file extension. Allowed extensions are png, jpg, jpeg, gif.')
+        raise ValidationError('Invalid file extension. Allowed extensions are png, jpg, jpeg, gif, tiff.')
 
 class UploadForm(FlaskForm):
     image = FileField('Image', validators=[DataRequired(), validate_image])
